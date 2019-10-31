@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" >
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" >
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+
+    <title>Amaze - Bootstrap Admin Dashboard Template</title>
+
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' name='viewport' >
+    <meta name="viewport" content="width=device-width" >
+
+    <!-- Bootstrap core CSS     -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" >
+
+    <!--  Paper Dashboard CSS    -->
+    <link href="../assets/css/amaze.css" rel="stylesheet" >
+
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="../assets/css/demo.css" rel="stylesheet" >
+
+    <!--     Fonts and icons     -->
+    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../assets/css/font-muli.css" rel='stylesheet' type='text/css'>
+    <link href="../assets/css/themify-icons.css" rel="stylesheet">
+
+    <link href="../assets/vendors/sweetalert/css/sweetalert2.min.css" rel="Stylesheet" >
+</head>
+
+<body>
+
+
+
+
+Workforce management in omnichannel service centers with heterogeneous channel response urgencies Noyan Ilk a, Michael Brusco, Paulo Goes College of Business, Florida State University, Tallahassee, FL 32306, United States Eller College of Management, University of Arizona, Tucson, AZ 85721, United States
+<br/>
+article info abstract
+Article history:
+Received 7 May 2017
+Received in revised form 7 September 2017
+Accepted 17 October 2017
+Available online 19 October 2017
+Workforce staffing and assignment decisions are of critical importance for meeting the challenge of minimizing
+operational costs while providing satisfactory customer service. These decisions are particularly challenging for
+omnichannel service centers, where customers can request services via different communication channels
+(e.g., phone, e-mail, live-chat, social media) that have different service quality and response requirements. We
+present a formulation of the omnichannel workforce management problem that accounts for variations in response urgencies of different channels as well as diminishing agent performances due to channel switching.
+We develop an algorithm that efficiently provides solutions for this problem and determines the number and
+channel allocation of service agents within the service center. Through numerical experiments, we study the performance of the algorithm among various service center configurations with equal cost characteristics. The results indicate that the proposed algorithm can identify service center structures that outperform many
+alternative structures, including those commonly-adopted in the real-world.
+
+1. Introduction
+Organizations all around the globe are increasingly relying on new
+digital communication mediums (e.g., social media, live-chat, e-mail)
+to connect with their customers. Widespread adoption of these technologies has lowered the communication barriers between customers and
+organizations, leading to a surge in the number of customer inquiries
+that organizations need to resolve every day [1]. Today's tech savvy customers do not only make phone calls, but also “live-chat”, “e-mail”,
+“tweet”, “text”, “Facebook post”, “use online forums”, etc. to request services and to convey their messages.
+Unsurprisingly, many organizations are moving away from a traditional (i.e., phone based) call center model to omnichannel service centers. Omnichannel service centers provide greater customer loyalty
+and higher satisfaction by providing services through multiple digital
+mediums at customers' convenience [2]. Forrester Research [3] reports
+significant growth (15% - 20%) in the use of digital channels such as
+live-chat and online forums among service center customers between
+2012 and 2014. According to Cisco [4], omnichannel service is one of
+the top three trends that emerged in customer relationship management. Newer service center platforms such as SAP's Hybris Service Engagement Center1 allow firms to provide ticketing and support
+services through multiple channels, while enabling their agents to
+move across these channels seamlessly.
+For all their potential benefits in improving customer relations,
+omnichannel service centers bring additional operational challenges
+for firms. Industry surveys indicate that one of the major challenges in
+omnichannel service center management is agent workforce management [5]. Allocating and assigning service agents across multiple channels with different skill requirements (e.g., talking over the phone, textbased messaging, social media monitoring) can be a complex task, especially when the service demands coming through different channels
+vary. Ideally, a firm could prefer to keep their best agents available on
+channels where they feel most comfortable. However, a high degree of
+specialization may lead to excessive hiring costs as well as inefficiency
+due to idle work times. The other end of this spectrum would be to
+allow service agents to dynamically move across all available channels.
+Undoubtedly, this approach also comes with downsides, including excessive training costs, diminishing agent performance due to cognitive
+limitations [6,7] and loss of quality due to lack of gaining specialized
+skill experience [8]. Workforce management is further complicated by
+the fact that it may be more preferable for the firm to delay certain service requests for the sake of others (e.g., delaying e-mail responses until
+the phone channel becomes idle).
+Under this situation, identifying ideal service center structures that
+minimize overall operating costs while ensuring satisfactory customer
+service across multiple channels becomes an important problem for
+omnichannel service centers. Our study aims to address this problem.
+
+In particular, we propose a novel method for solving the staff planning
+problem in an omnichannel service setting, in which different service
+channels may have different response urgencies. Staff planning is one
+of three main problems within the workforce management domain [9,
+10]. The goal of this problem is to determine the long-term strategic
+staffing levels (hiring and training) for a planning period (e.g., year),
+while considering a cost-based objective function and performance-related constraints. Such staffing decisions are usually made several
+weeks and sometimes months ahead of time due to lead times associated with hiring and training employees [11]. From a managerial standpoint, our method addresses the following three questions regarding
+staff planning:
+1) How many service agents should be employed within an
+omnichannel service center?
+2) To which channel(s) should each service agent be assigned?
+The first research question is concerned with determining the total
+number of agents needed in the service center for the entirety of the
+planning period whereas the second research question considers identifying the constant channel assignment of each agent. It is important
+to note that answering these questions requires considering the tradeoff between staffing costs (hiring and training) and penalty costs due
+to service delays. Our method incorporates this trade-off in the solution,
+as well as various other omnichannel considerations such as
+diminishing agent performances due to channel switching and variations in response urgencies of different channels.
+There are three main motivating factors that distinguish our study
+from earlier work in the workforce management literature. First, we
+specify our problem within the context of omniservice service centers
+that have several unique routing and staffing considerations such as a
+hierarchical order among channels and diminishing agent performances. In particular, the first issue (response priority differences
+among channels) requires us to solve a routing problem at the realization of each time interval, in addition to the master staffing problem.
+To our knowledge, Wallace and Whitt [12] is the only study that considered solving routing and staffing problems concurrently, however their
+approach depends on a static priority-routing scheme in addition to
+having constraints on service agent skill sets. Our approach relaxes
+both of these assumptions. Second, we capture the trade-off between
+staffing costs and service quality by explicitly incorporating the quality
+related costs into the optimization model. A number of previous studies
+have used external simulation models to estimate service levels, which
+are used as optimization constraints at each iteration of the solution
+process. However, this approach is less satisfactory for instances
+where it may be impractical, or even impossible, to simulate the system.
+In addition, we believe that representing service quality (i.e., service
+shortage) as a penalty cost is a natural way of quantifying the outcomes
+by firm managers and decision makers. Third, our approach aims to simultaneously fulfill two distinct but interconnected goals: determining
+staff levels and determining staff flexibility. To our knowledge, there is
+little research that attempted to satisfy these two goals collectively in
+the omnichannel service center setting. Further, a majority of previous
+studies in the literature have focused on only one of these issues,
+while keeping other variables and outcomes constant. Yet, from a management (practical) standpoint, there is no inherent reason to pre-determine or set any values when the single overall goal of the firm is to
+minimize total operating and service delay costs, as shown in Aksin et
+al. [13]. We believe that the comprehensiveness of our approach
+makes it highly practical and applicable to real-world omnichannel service centers.
+We evaluate the performance of our approach using numerical experiments that mimic possible different scenarios in an omnichannel
+service center. To assess the performance of the proposed solution, we
+develop a discrete-event simulation program and compute the waiting
+times and overall service levels under a variety of system parameters.
+The results indicate that the proposed method can identify service center structures that outperform many competitive structures, including
+several commonly adopted in the real-world.
+The rest of the paper is organized as follows. In Section 2, we review
+the related literature. In Section 3, we present the model formulations
+and describe our solution algorithm. In Section 4, we run numerical experiments to evaluate the performance of the algorithm. Finally, in
+Section 5, we conclude the paper with a discussion of the findings, limitations, and potential future work.
+2. Related literature
+There exists a large body of literature that addresses workforce problems in service centers. Our study draws from two main research
+streams within this context. The first stream focuses on determining
+flexibility levels for employees that can be cross-utilized in different
+skills. It has been widely known that cross-utilization of employees
+among departments with varying service demand is a well-recognized
+policy for coping with service shortages [14,15]. Jordan and Graves
+[16] was one of the earlier works that showed that certain flexibility
+configurations can achieve almost all the benefits of full server flexibility. They introduced the concept of chaining (in the context of
+manufacturing), which is a special structure that connects, directly or
+indirectly, all demand and all server nodes in the system via flexibility
+links. Brusco and Johns [17] and Hopp et al. [18] extended the idea of
+chaining to cross-training of employees in service operations. On the
+other hand, Gurumurthi and Benjaafar [19] showed that chained configurations may not always be the best solution, especially when asymmetric systems are considered. Under this consideration, Iravani et al.
+[20,21] developed performance indices to compare and rank pre-defined service flexibility structures. These indices characterize the ability
+of cross-training structures (such as cross-trained call center employees) to respond effectively to variability in demand. More recently,
+Aksin et al. [13] compared different flexibility structures including twoskill chain, adjacent-level [22], nested, and overflow from a profit maximization perspective. They particularly focused on the value of flexibility under each structure after optimizing the server capacity levels (as
+opposed to considering fixed capacity levels). Besides the evaluation
+of pre-defined cross-training structures, there is also research on identification of good cross-training structures. Notable work in this area was
+conducted by Chou et al. [23], who adopted the concept of graph expansion to analyze worst-case performances in general demand settings
+and suggested heuristics based on the results for designing flexible process structures. Another contribution was provided by Andradόttir et al.
+[24], who used the notion of bottlenecks in heterogeneous systems to
+identify certain characteristics of desirable flexibility structures. Also
+relevant to this stream is the work of Bassamboo et al. [22], who investigated optimal flexibility configurations within newsvendor network
+models.
+A majority of these existing studies consider staffing levels to be constant for flexibility analysis. On the other hand, there exists a separate
+research stream in the literature that particularly focuses on determining staffing levels. For example, Cezik and L'Ecuyer [25] proposed an algorithm to minimize the staffing costs of a multiskill service center
+subject to service-level requirements. A particular strength of their
+work is differentiating server pools in terms of skill preferences. However, their approach suffered from long computation times due to the
+need of simulating the system at each iteration of the algorithm, and
+this issue was explicitly addressed by Pot et al. [26] via a heuristic algorithm that avoided simulations. While these two studies primarily investigated optimal staffing allocation that is constant over a longer
+term period, a different body of work focused on staffing decisions
+over shorter term schedules. For example, Harrison and Zeevi [27] developed a novel method for sizing server pools that are only fixed within
+shorter planning periods, such as multiple shifts within 1 day. Similarly,
+Atlason et al. [28] suggested a method to find approximately optimal
+
+
+
+<!--   Core JS Files   -->
+<script src="../assets/vendors/jquery-3.1.1.min.js" type="text/javascript"></script>
+<script src="../assets/vendors/jquery-ui.min.js" type="text/javascript"></script>
+<script src="../assets/vendors/bootstrap.min.js" type="text/javascript"></script>
+<script src="../assets/vendors/material.min.js" type="text/javascript"></script>
+<script src="../assets/vendors/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+<!-- Forms Validations Plugin -->
+<script src="../assets/vendors/jquery.validate.min.js"></script>
+<!--  Plugin for Date Time Picker and Full Calendar Plugin-->
+<script src="../assets/vendors/moment.min.js"></script>
+<!--  Charts Plugin -->
+<script src="../assets/vendors/chartist.min.js"></script>
+<!--  Plugin for the Wizard -->
+<script src="../assets/vendors/jquery.bootstrap-wizard.js"></script>
+<!--  Notifications Plugin    -->
+<script src="../assets/vendors/bootstrap-notify.js"></script>
+<!-- DateTimePicker Plugin -->
+<script src="../assets/vendors/bootstrap-datetimepicker.js"></script>
+<!-- Vector Map plugin -->
+<script src="../assets/vendors/jquery-jvectormap.js"></script>
+<!-- Sliders Plugin -->
+<script src="../assets/vendors/nouislider.min.js"></script>
+<!-- Select Plugin -->
+<script src="../assets/vendors/jquery.select-bootstrap.js"></script>
+<!--  DataTables.net Plugin    -->
+<script src="../assets/vendors/jquery.datatables.js"></script>
+<!-- Sweet Alert 2 plugin -->
+<script src="../assets/vendors/sweetalert/js/sweetalert2.min.js"></script>
+<!--	Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
+<script src="../assets/vendors/jasny-bootstrap.min.js"></script>
+<!--  Full Calendar Plugin    -->
+<script src="../assets/vendors/fullcalendar.min.js"></script>
+<!-- TagsInput Plugin -->
+<script src="../assets/vendors/jquery.tagsinput.js"></script>
+<!-- Material Dashboard javascript methods -->
+<script src="../assets/js/amaze.js"></script>
+<!-- Material Dashboard DEMO methods, don't include it in your project! -->
+<script src="../assets/js/demo.js"></script>
+</body>
+</html>
